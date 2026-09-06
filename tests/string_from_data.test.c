@@ -12,7 +12,6 @@ TEST(creates_valid_string, {
 
     // validate .data field by checking against "data" variable
     // validate .length field by checking against "length" variable
-    // validate .capacity field by checking that it's equal of higher than ".length" field
 })
 
 TEST(string_outlives_original_stack_data, {
@@ -25,7 +24,6 @@ TEST(string_outlives_original_stack_data, {
 
     // validate .data field by checking against "data" variable
     // validate .length field by checking against "length" variable
-    // validate .capacity field by checking that it's equal of higher than ".length" field
 })
 
 TEST(string_outlives_original_heap_data, {
@@ -42,5 +40,4 @@ TEST(string_outlives_original_heap_data, {
 
     // validate .data field by checking against "data" variable
     // validate .length field by checking against "length" variable
-    // validate .capacity field by checking that it's equal of higher than ".length" field
 })
