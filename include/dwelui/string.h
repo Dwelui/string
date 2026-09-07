@@ -3,11 +3,33 @@
 
 #include <stddef.h>
 
+/**
+ * @brief Mutable string that owns its character buffer.
+ *
+ * @var String::data
+ *      Owned character buffer. NULL when length is 0.
+ *      The buffer is exactly `length` bytes long; it has no unused
+ *      capacity beyond the string contents.
+ *      Must be released with string_destroy().
+ *
+ * @var String::length
+ *      Number of character bytes in `data`.
+ */
 typedef struct {
     char  *data;
     size_t length;
 } String;
 
+/**
+ * @brief Immutable string view that does not own its character buffer.
+ *
+ * @var StringView::data
+ *      Borrowed character buffer. NULL when length is 0.
+ *      The buffer is not owned and must remain valid for the lifetime of the view.
+ *
+ * @var StringView::length
+ *      Number of character bytes in the view, starting at `data`.
+ */
 typedef struct {
     char  *data;
     size_t length;
@@ -18,6 +40,23 @@ typedef struct {
     size_t      count;
 } StringViewList;
 
+/**
+ * @brief Growable string that owns its character buffer.
+ *
+ * @var StringBuffer::data
+ *      Owned character buffer, initialized with string_buffer_start().
+ *      The buffer may have unused capacity beyond `length` to allow
+ *      amortized growth by string_buffer_append_data() and other
+ *      append functions.
+ *      Must be released with string_buffer_destroy(), or reset for
+ *      reuse with string_buffer_clean() without releasing its allocation.
+ *
+ * @var StringBuffer::length
+ *      Number of character bytes currently stored in `data`.
+ *
+ * @var StringBuffer::capacity
+ *      Number of character bytes allocated for `data`.
+ */
 typedef struct {
     char  *data;
     size_t length;
@@ -51,11 +90,9 @@ void           string_view_list_destroy(StringViewList *svl);
 
 // StringBuffer --------------------------
 
-StringBuffer string_buffer_start(); // allocate a smart amount from the get go.
+StringBuffer string_buffer_start();
 StringBuffer string_buffer_append_data(StringBuffer *sb, const char *part, size_t length);
-StringBuffer string_buffer_clean(
-    StringBuffer
-        *sb); // removes data, leaves allocated space for repeated buildings of similar data.
-void string_buffer_destroy(StringBuffer *sb);
+StringBuffer string_buffer_clean(StringBuffer *sb);
+void         string_buffer_destroy(StringBuffer *sb);
 
 #endif // DWELUI_STRING_H
