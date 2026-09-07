@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-DATA_PROVIDER(stringsDataProvider, {
+DATA_PROVIDER(stringDataProvider, {
     test_data_add("hello world", "Hello world!");
     test_data_add("", "");
 })
@@ -23,7 +23,7 @@ TEST(creates, {
 
     string_destroy(&string);
 })
-TEST_OPTIONS(creates, .dataProvider = stringsDataProvider())
+TEST_OPTIONS(creates, .dataProvider = stringDataProvider())
 
 TEST(outlives_original_heap_data, {
     const char *data   = test_data_get(char);
@@ -45,4 +45,4 @@ TEST(outlives_original_heap_data, {
 
     string_destroy(&string);
 })
-TEST_OPTIONS(outlives_original_heap_data, .dataProvider = stringsDataProvider())
+TEST_OPTIONS(outlives_original_heap_data, .dataProvider = stringDataProvider())
