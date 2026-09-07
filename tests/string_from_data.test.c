@@ -4,8 +4,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+DATA_PROVIDER(stringsDataProvider, {
+    test_data_add("hello world", "Hello world!");
+    test_data_add("", "");
+})
+
 TEST(creates, {
-    const char *data   = "Hello world!";
+    const char *data   = test_data_get(char);
     size_t      length = strlen(data);
 
     String      string = string_from_data(data, length);
@@ -18,9 +23,10 @@ TEST(creates, {
 
     string_destroy(&string);
 })
+TEST_OPTIONS(creates, .dataProvider = stringsDataProvider())
 
 TEST(outlives_original_heap_data, {
-    const char *data   = "Hello world!";
+    const char *data   = test_data_get(char);
     size_t      length = strlen(data);
 
     char       *dataHeap = malloc(sizeof(char) * length + 1);
@@ -39,3 +45,4 @@ TEST(outlives_original_heap_data, {
 
     string_destroy(&string);
 })
+TEST_OPTIONS(outlives_original_heap_data, .dataProvider = stringsDataProvider())
