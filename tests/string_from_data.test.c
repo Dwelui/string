@@ -4,33 +4,26 @@
 #include <stdlib.h>
 #include <string.h>
 
-TEST(creates_valid_string, {
-    const char* data = "Hello world!";
-    size_t length = strlen(data);
+TEST(creates, {
+    const char *data   = "Hello world!";
+    size_t      length = strlen(data);
 
-    String string = string_from_data(data, length);
+    String      string = string_from_data(data, length);
 
-    // validate .data field by checking against "data" variable
-    // validate .length field by checking against "length" variable
+    test_assert(string.length == length);
+
+    for (size_t i = 0; i < string.length; i++) {
+        test_assert(string.data[i] == data[i]);
+    }
+
+    string_destroy(&string);
 })
 
-TEST(string_outlives_original_stack_data, {
-    char* data = "Hello world!";
-    size_t length = strlen(data);
+TEST(outlives_original_heap_data, {
+    const char *data   = "Hello world!";
+    size_t      length = strlen(data);
 
-    String string = string_from_data(data, length);
-
-    data = nullptr;
-
-    // validate .data field by checking against "data" variable
-    // validate .length field by checking against "length" variable
-})
-
-TEST(string_outlives_original_heap_data, {
-    const char* data = "Hello world!";
-    size_t length = strlen(data);
-
-    char* dataHeap = malloc(sizeof(char) * length + 1);
+    char       *dataHeap = malloc(sizeof(char) * length + 1);
     memcpy(dataHeap, data, length);
     dataHeap[length] = '\0';
 
@@ -38,6 +31,11 @@ TEST(string_outlives_original_heap_data, {
 
     free(dataHeap);
 
-    // validate .data field by checking against "data" variable
-    // validate .length field by checking against "length" variable
+    test_assert(string.length == length);
+
+    for (size_t i = 0; i < string.length; i++) {
+        test_assert(string.data[i] == data[i]);
+    }
+
+    string_destroy(&string);
 })

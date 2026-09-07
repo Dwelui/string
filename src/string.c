@@ -1,8 +1,26 @@
 #include <dwelui/string.h>
-
-// TODO: Is it worth not using standart librararies? What are the trade offs?
-// Avoid using std libs like "string" and others...
+#include <stdlib.h>
+#include <string.h>
 
 String string_from_data(const char *data, size_t length) {
-    return (String){.data = nullptr, .length = 0};
+    String string = {.data = nullptr, length};
+
+    if (0 == string.length) {
+        return string;
+    }
+
+    string.data = malloc(sizeof(char) * string.length);
+    memcpy(string.data, data, string.length);
+
+    return string;
+}
+
+void string_destroy(String *s) {
+    if (0 == s->length) {
+        return;
+    }
+
+    free(s->data);
+    s->data = nullptr;
+    s->length = 0;
 }
