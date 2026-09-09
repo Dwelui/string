@@ -8,17 +8,29 @@
 
 StringBuffer string_buffer_start() {
     StringBuffer buffer = {
-        .data     = malloc(sizeof(char) * STRING_BUFFER_START_CAPACITY),
+        .data     = nullptr,
         .length   = 0,
         .capacity = STRING_BUFFER_START_CAPACITY,
     };
+
+    buffer.data = malloc(sizeof(char) * STRING_BUFFER_START_CAPACITY);
+    if (nullptr == buffer.data) {
+        perror("malloc");
+    }
 
     return buffer;
 }
 
 void string_buffer_append_data(StringBuffer *sb, const char *data, size_t length) {
     if (sb->length + length > sb->capacity) {
-        // realloc for more capacity
+        while (sb->capacity < sb->length + length) {
+            sb->capacity *= 2;
+        }
+
+        sb->data = realloc(sb->data, sizeof(char) * sb->capacity);
+        if (nullptr == sb->data) {
+            perror("realloc");
+        }
     }
 
     memcpy(sb->data + sb->length, data, length);
