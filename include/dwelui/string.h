@@ -91,8 +91,8 @@ void           string_view_list_destroy(StringViewList *svl);
 // StringBuffer --------------------------
 
 StringBuffer string_buffer_start();
-StringBuffer string_buffer_append_data(StringBuffer *sb, const char *part, size_t length);
-StringBuffer string_buffer_clean(StringBuffer *sb);
+void         string_buffer_append_data(StringBuffer *sb, const char *data, size_t length);
+void         string_buffer_clean(StringBuffer *sb);
 void         string_buffer_destroy(StringBuffer *sb);
 
 #endif // DWELUI_STRING_H
