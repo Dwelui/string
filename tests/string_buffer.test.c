@@ -16,7 +16,7 @@ DATA_PROVIDER(stringBufferFixtureDataProvider, {
     test_data_add("lorem_1024.txt", "tests/fixtures/lorem_1024.txt");
 })
 
-TEST(after_append_data_count_is_correct, {
+TEST(append_data_count, {
     FILE *fixtureFd = fopen(test_data_get(char), "r");
     if (nullptr == fixtureFd) {
         perror("fopen");
@@ -40,9 +40,9 @@ TEST(after_append_data_count_is_correct, {
 
     string_buffer_destroy(&buffer);
 })
-TEST_OPTIONS(after_append_data_count_is_correct, .dataProvider = stringBufferFixtureDataProvider())
+TEST_OPTIONS(append_data_count, .dataProvider = stringBufferFixtureDataProvider())
 
-TEST(to_string_data_and_length_are_correct, {
+TEST(string_from_buffer, {
     FILE *fixtureFd = fopen(test_data_get(char), "r");
     if (nullptr == fixtureFd) {
         perror("fopen");
@@ -70,4 +70,4 @@ TEST(to_string_data_and_length_are_correct, {
     // free buffer
     // free string
 })
-TEST_OPTIONS(to_string_data_and_length_are_correct, .dataProvider = stringBufferFixtureDataProvider())
+TEST_OPTIONS(string_from_buffer, .dataProvider = stringBufferFixtureDataProvider())

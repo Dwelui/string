@@ -9,7 +9,7 @@ DATA_PROVIDER(stringDataProvider, {
     test_data_add("", "");
 })
 
-TEST(creates, {
+TEST(from_data, {
     const char *data   = test_data_get(char);
     size_t      length = strlen(data);
 
@@ -23,9 +23,9 @@ TEST(creates, {
 
     string_destroy(&string);
 })
-TEST_OPTIONS(creates, .dataProvider = stringDataProvider())
+TEST_OPTIONS(from_data, .dataProvider = stringDataProvider())
 
-TEST(outlives_original_heap_data, {
+TEST(from_data_outlives_original_heap_data, {
     const char *data   = test_data_get(char);
     size_t      length = strlen(data);
 
@@ -45,4 +45,4 @@ TEST(outlives_original_heap_data, {
 
     string_destroy(&string);
 })
-TEST_OPTIONS(outlives_original_heap_data, .dataProvider = stringDataProvider())
+TEST_OPTIONS(from_data_outlives_original_heap_data, .dataProvider = stringDataProvider())
