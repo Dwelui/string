@@ -10,7 +10,7 @@ TEST(start_and_destroy, {
     string_buffer_destroy(&buffer);
 })
 
-DATA_PROVIDER(stringBufferFixtureDataProvider, {
+TEST_DATA_PROVIDER(stringBufferFixtureDataProvider, {
     test_data_add("lorem_64.txt", "tests/fixtures/lorem_64.txt");
     test_data_add("lorem_64_special.txt", "tests/fixtures/lorem_64_special.txt");
     test_data_add("lorem_1024.txt", "tests/fixtures/lorem_1024.txt");

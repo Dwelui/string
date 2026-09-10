@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-DATA_PROVIDER(stringDataProvider, {
+TEST_DATA_PROVIDER(stringDataProvider, {
     test_data_add("Hello world!", "Hello world!");
     test_data_add("", "");
 })
