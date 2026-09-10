@@ -78,7 +78,6 @@ bool           string_trim(String *s);
 
 // StringView ----------------------------
 
-StringView     string_view_from_buffer(StringBuffer sb);
 StringView     string_view_from_string(String s);
 StringView     string_view_from_data(const char *data, size_t length);
 StringView     string_view_from_cstr(const char *data);

@@ -41,3 +41,33 @@ TEST(after_append_data_count_is_correct, {
     string_buffer_destroy(&buffer);
 })
 TEST_OPTIONS(after_append_data_count_is_correct, .dataProvider = stringBufferFixtureDataProvider())
+
+TEST(to_string_data_and_length_are_correct, {
+    FILE *fixtureFd = fopen(test_data_get(char), "r");
+    if (nullptr == fixtureFd) {
+        perror("fopen");
+    }
+
+    size_t       chuckSize = 12;
+    char         data[chuckSize + 1];
+    size_t       length      = 0;
+    size_t       totalLength = 0;
+
+    StringBuffer buffer = string_buffer_start();
+
+    do {
+        length = fread(data, 1, chuckSize, fixtureFd);
+        totalLength += length;
+
+        string_buffer_append_data(&buffer, data, length);
+    } while (0 != length);
+
+    String string = string_from_buffer(buffer);
+
+    // test_assert for data is correct. Can read file in one go instead of building in chuncks
+    test_assert(string.length == totalLength);
+
+    // free buffer
+    // free string
+})
+TEST_OPTIONS(to_string_data_and_length_are_correct, .dataProvider = stringBufferFixtureDataProvider())
