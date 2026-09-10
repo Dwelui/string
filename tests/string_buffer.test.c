@@ -16,7 +16,7 @@ DATA_PROVIDER(stringBufferFixtureDataProvider, {
     test_data_add("lorem_1024.txt", "tests/fixtures/lorem_1024.txt");
 })
 
-TEST(append_data_count, {
+TEST(append_data, {
     FILE *fixtureFd = fopen(test_data_get(char), "r");
     if (nullptr == fixtureFd) {
         perror("fopen");
@@ -40,7 +40,7 @@ TEST(append_data_count, {
 
     string_buffer_destroy(&buffer);
 })
-TEST_OPTIONS(append_data_count, .dataProvider = stringBufferFixtureDataProvider())
+TEST_OPTIONS(append_data, .dataProvider = stringBufferFixtureDataProvider())
 
 TEST(string_from_buffer, {
     FILE *fixtureFd = fopen(test_data_get(char), "r");
@@ -64,10 +64,9 @@ TEST(string_from_buffer, {
 
     String string = string_from_buffer(buffer);
 
-    // test_assert for data is correct. Can read file in one go instead of building in chuncks
     test_assert(string.length == totalLength);
 
-    // free buffer
-    // free string
+    string_buffer_destroy(&buffer);
+    string_destroy(&string);
 })
 TEST_OPTIONS(string_from_buffer, .dataProvider = stringBufferFixtureDataProvider())
