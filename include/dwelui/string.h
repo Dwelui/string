@@ -69,10 +69,12 @@ String         string_from_buffer(StringBuffer sb);
 String         string_from_view(StringView sv);
 String         string_from_data(const char *data, size_t length);
 String         string_from_cstr(const char *cstr);
+void           string_destroy(String *s);
 String         string_clone(String s);
 bool           string_append(String *s, StringView part);
-void           string_destroy(String *s);
-StringViewList string_split_string(String *haystack, StringView delimiter);
+void           string_replace_cs_cs(String *s, const char *search, const char *replace, size_t *count);
+void           string_replace(String *s, StringView search, StringView replace, size_t *count);
+StringViewList string_split_s(String haystack, StringView delimiter);
 bool           string_equals(String a, String b);
 bool           string_trim(String *s);
 
@@ -90,8 +92,8 @@ void           string_view_list_destroy(StringViewList *svl);
 // StringBuffer --------------------------
 
 StringBuffer string_buffer_start();
+void         string_buffer_destroy(StringBuffer *sb);
 void         string_buffer_append_data(StringBuffer *sb, const char *data, size_t length);
 void         string_buffer_clean(StringBuffer *sb);
-void         string_buffer_destroy(StringBuffer *sb);
 
 #endif // DWELUI_STRING_H
