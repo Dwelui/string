@@ -4,10 +4,7 @@
 #include <string.h>
 
 String string_from_buffer(StringBuffer sb) {
-    String string = {
-        .data = nullptr,
-        .length = sb.length
-    };
+    String string = {.data = nullptr, .length = sb.length};
 
     string.data = malloc(sizeof(char) * string.length);
     if (nullptr == string.data) {
@@ -32,12 +29,20 @@ String string_from_data(const char *data, size_t length) {
     return string;
 }
 
+String string_from_cstr(const char *cstr) {
+    return string_from_data(cstr, strlen(cstr));
+}
+
+String string_clone(String s) {
+    return string_from_data(s.data, s.length);
+}
+
 void string_destroy(String *s) {
     if (0 == s->length) {
         return;
     }
 
     free(s->data);
-    s->data = nullptr;
+    s->data   = nullptr;
     s->length = 0;
 }
