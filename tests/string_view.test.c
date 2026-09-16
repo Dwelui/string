@@ -1,5 +1,6 @@
 #include <dwelui/test.h>
 #include <dwelui/string.h>
+#include <stdio.h>
 #include <string.h>
 
 TEST_DATA_PROVIDER(cstrDataProvider, {
@@ -36,24 +37,24 @@ TEST(from_cstr_with_nullptr, {
 typedef struct {
     const char *a;
     const char *b;
-    const bool expected;
+    const bool  expected;
 } EqualData;
 TEST_DATA_PROVIDER(equalDataProvider, {
-    const static EqualData item1 = { "abc", "abc", true };
+    static const EqualData item1 = {"abc", "abc", true};
     test_data_add("abc abc", item1);
 
-    const static EqualData item2 = { "abc", "cba", false };
+    static const EqualData item2 = {"abc", "cba", false};
     test_data_add("abc cba", item2);
 
-    const static EqualData item3 = { "", "", false };
+    static const EqualData item3 = {"", "", true};
     test_data_add(" ", item3);
 })
 
 TEST(equal, {
-    const EqualData *data = test_data_get(EqualData);
-    const StringView a = string_view_from_cstr(data->a);
-    const StringView b = string_view_from_cstr(data->b);
-    const bool expected = data->expected;
+    const EqualData *data     = test_data_get(EqualData);
+    const StringView a        = string_view_from_cstr(data->a);
+    const StringView b        = string_view_from_cstr(data->b);
+    const bool       expected = data->expected;
 
     test_assert(string_view_equal(a, b) == expected);
 })
