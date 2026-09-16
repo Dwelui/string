@@ -104,3 +104,34 @@ TEST(from_data_outlives_original_heap_data, {
     string_destroy(&string);
 })
 TEST_OPTIONS(from_data_outlives_original_heap_data, .dataProvider = cstrDataProvider())
+
+
+typedef struct {
+    const char *cstr;
+    const char *search;
+    const char *replace;
+    const char *expected;
+} ReplaceData;
+TEST_DATA_PROVIDER(replaceDataProvider, {
+    static const ReplaceData item1 = {"a b c d", "\n", "\n\r", "a-b-c-d"};
+    test_data_add("a b c d -> a-b-c-d", item1);
+})
+TEST(replace, {
+    // TODO: Implement test_skip first of all
+    test_skip("waiting for string_equals implementation...");
+    const ReplaceData *data = test_data_get(ReplaceData);
+
+    String      actual = string_from_cstr(data->cstr);
+    String      expected = string_from_cstr(data->expected);
+
+    size_t count = 0;
+    StringView search = string_view_from_cstr(data->search);
+    StringView replace = string_view_from_cstr(data->replace);
+    string_replace(&actual, search, replace, &count);
+
+    test_assert(string_equals(actual, expected) == true);
+
+    string_destroy(&actual);
+    string_destroy(&expected);
+})
+TEST_OPTIONS(replace, .dataProvider = replaceDataProvider())

@@ -46,3 +46,7 @@ void string_destroy(String *s) {
     s->data   = nullptr;
     s->length = 0;
 }
+
+void string_replace(String *s, StringView search, StringView replace, size_t *count) {
+
+}
