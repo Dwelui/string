@@ -4,12 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-TEST_DATA_PROVIDER(stringBufferFixtureDataProvider, {
-    test_data_add("lorem_64.txt", "tests/fixtures/lorem_64.txt");
-    test_data_add("lorem_64_special.txt", "tests/fixtures/lorem_64_special.txt");
-    test_data_add("lorem_1024.txt", "tests/fixtures/lorem_1024.txt");
-})
+#include "data_providers.c"
 
 TEST(from_buffer, {
     FILE *fixtureFd = fopen(test_data_get(char), "r");
@@ -39,11 +34,6 @@ TEST(from_buffer, {
     string_destroy(&string);
 })
 TEST_OPTIONS(from_buffer, .dataProvider = stringBufferFixtureDataProvider())
-
-TEST_DATA_PROVIDER(stringDataProvider, {
-    test_data_add("Hello world!", "Hello world!");
-    test_data_add("", "");
-})
 
 TEST(from_data, {
     const char *data   = test_data_get(char);

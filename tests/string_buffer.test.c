@@ -3,17 +3,12 @@
 #include <dwelui/string.h>
 #include <stdio.h>
 #include <string.h>
+#include "data_providers.c"
 
 TEST(start_and_destroy, {
     StringBuffer buffer = string_buffer_start();
 
     string_buffer_destroy(&buffer);
-})
-
-TEST_DATA_PROVIDER(stringBufferFixtureDataProvider, {
-    test_data_add("lorem_64.txt", "tests/fixtures/lorem_64.txt");
-    test_data_add("lorem_64_special.txt", "tests/fixtures/lorem_64_special.txt");
-    test_data_add("lorem_1024.txt", "tests/fixtures/lorem_1024.txt");
 })
 
 TEST(append_data, {

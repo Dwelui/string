@@ -2,11 +2,7 @@
 #include <dwelui/string.h>
 #include <stdio.h>
 #include <string.h>
-
-TEST_DATA_PROVIDER(cstrDataProvider, {
-    test_data_add("Hello world!", "Hello world!");
-    test_data_add("", "");
-})
+#include "data_providers.c"
 
 TEST(from_cstr, {
     const char *data   = test_data_get(char);
