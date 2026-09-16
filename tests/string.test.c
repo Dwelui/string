@@ -49,7 +49,7 @@ TEST(from_data, {
 
     string_destroy(&string);
 })
-TEST_OPTIONS(from_data, .dataProvider = stringDataProvider())
+TEST_OPTIONS(from_data, .dataProvider = cstrDataProvider())
 
 TEST(from_cstr, {
     const char *data = test_data_get(char);
@@ -64,7 +64,7 @@ TEST(from_cstr, {
 
     string_destroy(&string);
 })
-TEST_OPTIONS(from_cstr, .dataProvider = stringDataProvider())
+TEST_OPTIONS(from_cstr, .dataProvider = cstrDataProvider())
 
 TEST(clone, {
     const char *data = test_data_get(char);
@@ -81,7 +81,7 @@ TEST(clone, {
 
     string_destroy(&clone);
 })
-TEST_OPTIONS(clone, .dataProvider = stringDataProvider())
+TEST_OPTIONS(clone, .dataProvider = cstrDataProvider())
 
 TEST(from_data_outlives_original_heap_data, {
     const char *data   = test_data_get(char);
@@ -103,4 +103,4 @@ TEST(from_data_outlives_original_heap_data, {
 
     string_destroy(&string);
 })
-TEST_OPTIONS(from_data_outlives_original_heap_data, .dataProvider = stringDataProvider())
+TEST_OPTIONS(from_data_outlives_original_heap_data, .dataProvider = cstrDataProvider())
