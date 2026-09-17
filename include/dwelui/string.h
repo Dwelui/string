@@ -65,16 +65,16 @@ typedef struct {
 
 // String --------------------------------
 
-String         string_from_buffer(StringBuffer sb);
-String         string_from_view(StringView sv);
-String         string_from_data(const char *data, size_t length);
-String         string_from_cstr(const char *cstr);
-String         string_clone(String s);
-void           string_destroy(String *s);
-bool           string_append(String *s, StringView part);
-void           string_replace(String *s, StringView search, StringView replace, size_t *count);
-bool           string_equal(String a, String b);
-bool           string_trim(String *s);
+String string_from_buffer(StringBuffer sb);
+String string_from_view(StringView sv);
+String string_from_data(const char *data, size_t length);
+String string_from_cstr(const char *cstr);
+String string_clone(String s);
+void   string_destroy(String *s);
+bool   string_append(String *s, StringView part);
+void   string_replace(String *s, StringView search, StringView replace, size_t *count);
+bool   string_equal(String a, String b);
+bool   string_trim(String *s);
 
 // StringView ----------------------------
 
