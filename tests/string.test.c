@@ -136,12 +136,14 @@ TEST(replace, {
 TEST_OPTIONS(replace, .dataProvider = replaceDataProvider())
 
 TEST(equal, {
-    test_skip("waiting for string_view_from_string implementation...");
     const EqualData *data     = test_data_get(EqualData);
-    const String     a        = string_from_cstr(data->a);
-    const String     b        = string_from_cstr(data->b);
+    String           a        = string_from_cstr(data->a);
+    String           b        = string_from_cstr(data->b);
     const bool       expected = data->expected;
 
     test_assert(string_equal(a, b) == expected);
+
+    string_destroy(&a);
+    string_destroy(&b);
 })
 TEST_OPTIONS(equal, .dataProvider = equalDataProvider())
