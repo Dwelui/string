@@ -48,5 +48,9 @@ void string_destroy(String *s) {
 }
 
 void string_replace(String *s, StringView search, StringView replace, size_t *count) {
+    (void) s, (void)search, (void)replace, (void)count;
+}
 
+bool string_equal(String a, String b) {
+    return string_view_equal(string_view_from_string(a), string_view_from_string(b));
 }

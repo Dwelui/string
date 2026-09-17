@@ -73,7 +73,7 @@ String         string_clone(String s);
 void           string_destroy(String *s);
 bool           string_append(String *s, StringView part);
 void           string_replace(String *s, StringView search, StringView replace, size_t *count);
-bool           string_equals(String a, String b);
+bool           string_equal(String a, String b);
 bool           string_trim(String *s);
 
 // StringView ----------------------------

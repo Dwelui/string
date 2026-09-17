@@ -7,8 +7,8 @@
 #include "data_providers.c"
 
 TEST(from_buffer, {
-    const char* fixtureFilepath = test_data_get(char);
-    FILE *fixtureFd = fopen(fixtureFilepath, "r");
+    const char *fixtureFilepath = test_data_get(char);
+    FILE       *fixtureFd       = fopen(fixtureFilepath, "r");
     if (nullptr == fixtureFd) {
         perror("fopen");
     }
@@ -106,7 +106,6 @@ TEST(from_data_outlives_original_heap_data, {
 })
 TEST_OPTIONS(from_data_outlives_original_heap_data, .dataProvider = cstrDataProvider())
 
-
 typedef struct {
     const char *cstr;
     const char *search;
@@ -118,21 +117,31 @@ TEST_DATA_PROVIDER(replaceDataProvider, {
     test_data_add("a b c d -> a-b-c-d", item1);
 })
 TEST(replace, {
-    // TODO: Implement test_skip first of all
     test_skip("waiting for string_equals implementation...");
     const ReplaceData *data = test_data_get(ReplaceData);
 
-    String      actual = string_from_cstr(data->cstr);
-    String      expected = string_from_cstr(data->expected);
+    String             actual   = string_from_cstr(data->cstr);
+    String             expected = string_from_cstr(data->expected);
 
-    size_t count = 0;
-    StringView search = string_view_from_cstr(data->search);
-    StringView replace = string_view_from_cstr(data->replace);
+    size_t             count   = 0;
+    StringView         search  = string_view_from_cstr(data->search);
+    StringView         replace = string_view_from_cstr(data->replace);
     string_replace(&actual, search, replace, &count);
 
-    test_assert(string_equals(actual, expected) == true);
+    test_assert(string_equal(actual, expected) == true);
 
     string_destroy(&actual);
     string_destroy(&expected);
 })
 TEST_OPTIONS(replace, .dataProvider = replaceDataProvider())
+
+TEST(equal, {
+    test_skip("waiting for string_view_from_string implementation...");
+    const EqualData *data     = test_data_get(EqualData);
+    const String     a        = string_from_cstr(data->a);
+    const String     b        = string_from_cstr(data->b);
+    const bool       expected = data->expected;
+
+    test_assert(string_equal(a, b) == expected);
+})
+TEST_OPTIONS(equal, .dataProvider = equalDataProvider())

@@ -30,22 +30,6 @@ TEST(from_cstr_with_nullptr, {
     }
 })
 
-typedef struct {
-    const char *a;
-    const char *b;
-    const bool  expected;
-} EqualData;
-TEST_DATA_PROVIDER(equalDataProvider, {
-    static const EqualData item1 = {"abc", "abc", true};
-    test_data_add("abc abc", item1);
-
-    static const EqualData item2 = {"abc", "cba", false};
-    test_data_add("abc cba", item2);
-
-    static const EqualData item3 = {"", "", true};
-    test_data_add(" ", item3);
-})
-
 TEST(equal, {
     const EqualData *data     = test_data_get(EqualData);
     const StringView a        = string_view_from_cstr(data->a);
