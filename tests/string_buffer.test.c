@@ -12,7 +12,8 @@ TEST(start_and_destroy, {
 })
 
 TEST(append_data, {
-    FILE *fixtureFd = fopen(test_data_get(char), "r");
+    const char* fixtureFilepath = test_data_get(char);
+    FILE *fixtureFd = fopen(fixtureFilepath, "r");
     if (nullptr == fixtureFd) {
         perror("fopen");
     }
