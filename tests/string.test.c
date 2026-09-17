@@ -117,7 +117,6 @@ TEST_DATA_PROVIDER(replaceDataProvider, {
     test_data_add("a b c d -> a-b-c-d", item1);
 })
 TEST(replace, {
-    test_skip("waiting for string_equals implementation...");
     const ReplaceData *data = test_data_get(ReplaceData);
 
     String             actual   = string_from_cstr(data->cstr);
