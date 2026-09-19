@@ -110,23 +110,33 @@ typedef struct {
     const char *cstr;
     const char *search;
     const char *replace;
-    const char *expected;
+    const char *replaced;
+    size_t      count;
 } ReplaceData;
 TEST_DATA_PROVIDER(replaceDataProvider, {
-    static const ReplaceData item1 = {"a b c d", "\n", "\n\r", "a-b-c-d"};
-    test_data_add("a b c d -> a-b-c-d", item1);
+    // static const ReplaceData item1 = {"a b c d", " ", "-", "a-b-c-d", 3};
+    // test_data_add("a b c d -> a-b-c-d", item1);
+    //
+    // static const ReplaceData item2 = {"abc def ghi", " ", "-", "abc-def-ghi", 2};
+    // test_data_add("abc def ghi -> abc-def-ghi", item2);
+
+    static const ReplaceData item3 = {"abc def ghi", " def ", "-", "abc-ghi", 1};
+    test_data_add("abc def ghi -> abc-ghi", item3);
 })
 TEST(replace, {
     const ReplaceData *data = test_data_get(ReplaceData);
 
-    String             actual   = string_from_cstr(data->cstr);
-    String             expected = string_from_cstr(data->expected);
+    String             actual        = string_from_cstr(data->cstr);
+    String             expected      = string_from_cstr(data->replaced);
+    StringView         search        = string_view_from_cstr(data->search);
+    StringView         replace       = string_view_from_cstr(data->replace);
+    size_t             expectedCount = data->count;
 
-    StringView         search  = string_view_from_cstr(data->search);
-    StringView         replace = string_view_from_cstr(data->replace);
-    string_replace(&actual, search, replace, 0);
+    size_t             actualCount = string_replace(&actual, search, replace, 0);
 
     test_assert(string_equal(actual, expected) == true);
+    printf("actual: %zu, expected: %zu\n", actualCount, expectedCount);
+    test_assert(actualCount == expectedCount);
 
     string_destroy(&actual);
     string_destroy(&expected);

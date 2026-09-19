@@ -1,4 +1,5 @@
 #include <dwelui/string.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -48,27 +49,55 @@ void string_destroy(String *s) {
 }
 
 size_t string_replace(String *s, StringView search, StringView replace, size_t count) {
-    StringBuffer buffer     = string_buffer_start();
-    StringView   sView      = string_view_from_string(*s);
+    StringView   sView   = string_view_from_string(*s);
+    StringBuffer sBuffer = string_buffer_start();
+
     size_t       foundCount = 0;
-    for (size_t i = 0; i < s->length - search.length; i++) {
-        // Don't search for more than it was requested
+    int32_t      jumpSteps  = string_view_position_at(sView, search);
+    printf("jumpSteps: %d\n", jumpSteps);
+
+    while (jumpSteps >= 0) {
+        printf("Found search start: %d %c\n", sView.data[0], sView.data[0]);
+        string_buffer_append_data(&sBuffer, sView.data, jumpSteps);
+        string_buffer_append_data(&sBuffer, replace.data, replace.length);
+
+        printf("Current sBuffer:");
+        for (size_t i = 0; i < sBuffer.length; i++) {
+            printf("%c", sBuffer.data[i]);
+        }
+        printf("\n");
+
+        sView.data += jumpSteps + search.length;
+        sView.length -= jumpSteps + search.length;
+        printf("Next sView start: %d %c\n", sView.data[0], sView.data[0]);
+
+        printf("sView length: %zu search length: %zu\n", sView.length, search.length);
+        jumpSteps = string_view_position_at(sView, search);
+        printf("Next jumpSteps: %d\n", jumpSteps);
+        if (jumpSteps == -1) {
+            string_buffer_append_data(&sBuffer, sView.data, sView.length);
+        }
+
+        foundCount++;
         if (foundCount == count) {
             break;
         }
 
-        sView.data++;
-        sView.length--;
-        if (0 == string_view_position_at(sView, search)) {
-            string_buffer_append_data(&buffer, sView.data, sView.length - search.length);
-            string_buffer_append_data(&buffer, replace.data, replace.length);
-            foundCount++;
-        }
+
+        printf("\n");
     }
 
-    String result = string_from_buffer(buffer);
+    printf("sBuffer:");
+    for (size_t i = 0; i < sBuffer.length; i++) {
+        printf("%c", sBuffer.data[i]);
+    }
+    printf("\n");
+
+    String sReplaced = string_from_buffer(sBuffer);
+    string_buffer_destroy(&sBuffer);
     string_destroy(s);
-    s = &result;
+    s->data   = sReplaced.data;
+    s->length = sReplaced.length;
 
     return foundCount;
 }
