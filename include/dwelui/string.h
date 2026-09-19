@@ -2,6 +2,7 @@
 #define DWELUI_STRING_H
 
 #include <stddef.h>
+#include <stdint.h>
 
 /**
  * @brief Mutable string that owns its character buffer.
@@ -83,7 +84,7 @@ StringView     string_view_from_data(const char *data, size_t length);
 StringView     string_view_from_cstr(const char *data);
 StringView     string_view_clone(StringView sv);
 bool           string_view_equal(StringView a, StringView b);
-bool           string_view_starts_with(StringView haystack, StringView needle);
+int32_t        string_view_position_at(StringView haystack, StringView needle);
 bool           string_view_trim(StringView *sv);
 StringViewList string_split(StringView haystack, StringView delimiter);
 void           string_view_list_destroy(StringViewList *svl);

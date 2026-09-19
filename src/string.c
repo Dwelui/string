@@ -59,7 +59,7 @@ size_t string_replace(String *s, StringView search, StringView replace, size_t c
 
         sView.data++;
         sView.length--;
-        if (true == string_view_starts_with(sView, search)) {
+        if (0 == string_view_position_at(sView, search)) {
             string_buffer_append_data(&buffer, sView.data, sView.length - search.length);
             string_buffer_append_data(&buffer, replace.data, replace.length);
             foundCount++;
