@@ -135,7 +135,6 @@ TEST(replace, {
     size_t             actualCount = string_replace(&actual, search, replace, 0);
 
     test_assert(string_equal(actual, expected) == true);
-    printf("actual: %zu, expected: %zu\n", actualCount, expectedCount);
     test_assert(actualCount == expectedCount);
 
     string_destroy(&actual);
