@@ -69,6 +69,10 @@ size_t string_replace(String *s, StringView search, StringView replace, size_t c
 
         foundCount++;
         if (foundCount == count) {
+            if (nextChunkDistance > 0) {
+                string_buffer_append_data(&sBuffer, sView.data, sView.length);
+            }
+
             break;
         }
     }

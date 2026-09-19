@@ -122,6 +122,9 @@ TEST_DATA_PROVIDER(replaceDataProvider, {
 
     static const ReplaceData item3 = {"abc def ghi", " def ", "-", "abc-ghi", 1};
     test_data_add("abc def ghi -> abc-ghi", item3);
+
+    static const ReplaceData item4 = {"a b c d", " ", "-", "a-b-c d", 2};
+    test_data_add("a b c d -> a-b-c d", item4);
 })
 TEST(replace, {
     const ReplaceData *data = test_data_get(ReplaceData);
@@ -130,12 +133,12 @@ TEST(replace, {
     String             expected      = string_from_cstr(data->replaced);
     StringView         search        = string_view_from_cstr(data->search);
     StringView         replace       = string_view_from_cstr(data->replace);
-    size_t             expectedCount = data->count;
+    size_t             count = data->count;
 
-    size_t             actualCount = string_replace(&actual, search, replace, 0);
+    size_t             actualCount = string_replace(&actual, search, replace, count);
 
     test_assert(string_equal(actual, expected) == true);
-    test_assert(actualCount == expectedCount);
+    test_assert(actualCount == count);
 
     string_destroy(&actual);
     string_destroy(&expected);
