@@ -51,6 +51,9 @@ TEST_DATA_PROVIDER(positionAtDataProvider, {
     static PositionAtData item6 = {"Hello world!", "", 0};
     test_data_add("Hello world! <- \'\' at 0", item6);
 
-    static PositionAtData item7 = {"", "", -0};
+    static PositionAtData item7 = {"", "", 0};
     test_data_add("\'\' <- \'\' at 0", item7);
+
+    static PositionAtData item8 = {"Hello", "world!", -1};
+    test_data_add("Hello <- world! at -1", item8);
 })
