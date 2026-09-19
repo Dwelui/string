@@ -47,8 +47,30 @@ void string_destroy(String *s) {
     s->length = 0;
 }
 
-void string_replace(String *s, StringView search, StringView replace, size_t *count) {
-    (void) s, (void)search, (void)replace, (void)count;
+size_t string_replace(String *s, StringView search, StringView replace, size_t count) {
+    StringBuffer buffer     = string_buffer_start();
+    StringView   sView      = string_view_from_string(*s);
+    size_t       foundCount = 0;
+    for (size_t i = 0; i < s->length - search.length; i++) {
+        // Don't search for more than it was requested
+        if (foundCount == count) {
+            break;
+        }
+
+        sView.data++;
+        sView.length--;
+        if (true == string_view_starts_with(sView, search)) {
+            string_buffer_append_data(&buffer, sView.data, sView.length - search.length);
+            string_buffer_append_data(&buffer, replace.data, replace.length);
+            foundCount++;
+        }
+    }
+
+    String result = string_from_buffer(buffer);
+    string_destroy(s);
+    s = &result;
+
+    return foundCount;
 }
 
 bool string_equal(String a, String b) {

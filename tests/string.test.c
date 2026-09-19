@@ -122,10 +122,9 @@ TEST(replace, {
     String             actual   = string_from_cstr(data->cstr);
     String             expected = string_from_cstr(data->expected);
 
-    size_t             count   = 0;
     StringView         search  = string_view_from_cstr(data->search);
     StringView         replace = string_view_from_cstr(data->replace);
-    string_replace(&actual, search, replace, &count);
+    string_replace(&actual, search, replace, 0);
 
     test_assert(string_equal(actual, expected) == true);
 

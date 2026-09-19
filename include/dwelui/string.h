@@ -72,7 +72,7 @@ String string_from_cstr(const char *cstr);
 String string_clone(String s);
 void   string_destroy(String *s);
 bool   string_append(String *s, StringView part);
-void   string_replace(String *s, StringView search, StringView replace, size_t *count);
+size_t string_replace(String *s, StringView search, StringView replace, size_t count);
 bool   string_equal(String a, String b);
 bool   string_trim(String *s);
 
@@ -83,6 +83,7 @@ StringView     string_view_from_data(const char *data, size_t length);
 StringView     string_view_from_cstr(const char *data);
 StringView     string_view_clone(StringView sv);
 bool           string_view_equal(StringView a, StringView b);
+bool           string_view_starts_with(StringView haystack, StringView needle);
 bool           string_view_trim(StringView *sv);
 StringViewList string_split(StringView haystack, StringView delimiter);
 void           string_view_list_destroy(StringViewList *svl);
