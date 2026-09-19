@@ -114,11 +114,11 @@ typedef struct {
     size_t      count;
 } ReplaceData;
 TEST_DATA_PROVIDER(replaceDataProvider, {
-    // static const ReplaceData item1 = {"a b c d", " ", "-", "a-b-c-d", 3};
-    // test_data_add("a b c d -> a-b-c-d", item1);
-    //
-    // static const ReplaceData item2 = {"abc def ghi", " ", "-", "abc-def-ghi", 2};
-    // test_data_add("abc def ghi -> abc-def-ghi", item2);
+    static const ReplaceData item1 = {"a b c d", " ", "-", "a-b-c-d", 3};
+    test_data_add("a b c d -> a-b-c-d", item1);
+
+    static const ReplaceData item2 = {"abc def ghi", " ", "-", "abc-def-ghi", 2};
+    test_data_add("abc def ghi -> abc-def-ghi", item2);
 
     static const ReplaceData item3 = {"abc def ghi", " def ", "-", "abc-ghi", 1};
     test_data_add("abc def ghi -> abc-ghi", item3);
