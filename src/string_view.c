@@ -32,6 +32,10 @@ int32_t string_view_position_at(StringView haystack, StringView needle) {
         return 0;
     }
 
+    if (haystack.length < needle.length) {
+        return -1;
+    }
+
     for (size_t i = 0; i < haystack.length - needle.length + 1; i++) {
         if (haystack.data[i] == needle.data[0]) {
             for (size_t y = 1; y < needle.length; y++) {

@@ -56,4 +56,7 @@ TEST_DATA_PROVIDER(positionAtDataProvider, {
 
     static PositionAtData item8 = {"Hello", "world!", -1};
     test_data_add("Hello <- world! at -1", item8);
+
+    static PositionAtData item9 = {"ghi", " def ", -1};
+    test_data_add("ghi <- \' def \' at -1", item9);
 })
