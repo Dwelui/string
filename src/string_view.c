@@ -26,3 +26,23 @@ bool string_view_equal(StringView a, StringView b) {
 
     return true;
 }
+
+int32_t string_view_position_at(StringView haystack, StringView needle) {
+    if (needle.length == 0) {
+        return 0;
+    }
+
+    for (size_t i = 0; i < haystack.length - needle.length + 1; i++) {
+        if (haystack.data[i] == needle.data[0]) {
+            for (size_t y = 1; y < needle.length; y++) {
+                if (haystack.data[i + y] != needle.data[y]) {
+                    break;
+                }
+            }
+
+            return i;
+        }
+    }
+
+    return -1;
+}

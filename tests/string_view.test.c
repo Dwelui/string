@@ -54,3 +54,15 @@ TEST(equal, {
     test_assert(string_view_equal(a, b) == expected);
 })
 TEST_OPTIONS(equal, .dataProvider = equalDataProvider())
+
+TEST(position_at, {
+    const PositionAtData *data             = test_data_get(PositionAtData);
+    const StringView      haystack         = string_view_from_cstr(data->haystack);
+    const StringView      needle           = string_view_from_cstr(data->needle);
+    const int32_t         expectedPosition = data->position;
+
+    int32_t               actualPosition = string_view_position_at(haystack, needle);
+
+    test_assert(expectedPosition == actualPosition);
+})
+TEST_OPTIONS(position_at, .dataProvider = positionAtDataProvider())
